@@ -1,0 +1,627 @@
+/**Variables**/
+$pink: #f65261;
+$white: #ffffff;
+$light-grey: #555555;
+$medium-grey: #424242;
+$dark-grey: #232323;
+$green: limegreen;
+
+/**Global styles**/
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Helvetica Neue', sans-serif;
+    font-weight: normal;
+    background-color: $light-grey;
+}
+
+#__next {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+/**Header component**/
+.header-container {
+    margin-bottom: 10px;
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), 
+                center / cover url('../public/images/header-bg.jpg');
+}
+
+.blur-filter {
+    height: 100%;
+    padding: 20px 60px 0;
+    backdrop-filter: blur(3px);
+}
+
+/**HeaderTop component**/
+.header-top-container {
+    display: flex;
+    justify-content: space-between;
+    .add-movie-btn {
+		width: 184px;
+		height: 48px;
+		font-size: 22px;
+		background-color: $light-grey;
+		color: $pink;
+		border: none;
+		border-radius: 4px;
+		opacity: 0.7;
+		cursor: pointer;
+        outline: none;
+	}
+
+	.close-movie-details {
+		display: flex;
+		background: transparent;
+		border: none;
+		cursor: pointer;
+
+		& img {
+			height: 25px;
+		}
+	}
+}
+
+/**HeaderMain component**/
+.header-main-container {
+    display: flex;
+    flex-direction: column;
+    padding: 25px 70px 120px;
+
+    .main-title {
+        margin-bottom: 25px;
+        color: $white;
+        font-weight: 300;
+        font-size: 35px;
+        letter-spacing: 2px;
+    }
+}
+
+/**MainContent component**/
+.main-content {
+    flex: 1 0 auto;
+    background-color: $dark-grey;
+    padding: 5px 50px;
+}
+
+/**ModalWindow component**/
+.modal-window {
+    &-container {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), 
+                center / cover url('../public/images/header-bg.jpg');
+
+        .blur-filter {
+            backdrop-filter: blur(10px);
+            padding-bottom: 40px;
+        }
+    }
+    
+    &-wrapper {
+        display: flex;
+        flex-direction: column;
+        margin: 80px auto;
+        max-width: 700px;
+        background-color: $dark-grey;
+        border-radius: 5px;
+    }
+
+    &-body {
+        display: flex;
+        flex-direction: column;
+        padding: 0 80px;
+    }
+
+    &-close-btn {
+        display: flex;
+        align-items: center;
+        align-self: flex-end;
+        justify-content: center;
+        padding: 10px 10px 0 0;
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+
+        & img {
+            height: 40px;
+        }
+    
+    }
+
+    &-title {
+        font-size: 35px;
+        font-weight: normal;
+        letter-spacing: 2px;
+        color: $white;
+    }
+
+    &-content {
+        margin-top: 40px;
+        font-size: 20px;
+        font-weight: normal;
+        letter-spacing: 1px;
+        color: $white;
+    }
+
+    &-action {
+        display: flex;
+        justify-content: flex-end;
+        margin: 60px 0 50px;
+
+        &-btn {
+            background-color: transparent;
+            color: $pink;
+            padding: 15px 0;
+            width: 180px;
+            font-size: 20px;
+            border: 1px solid $pink;
+            border-radius: 5px;
+            cursor: pointer;
+            
+            &:last-of-type {
+                margin-left: 15px;
+                background-color: $pink;
+                border: none;
+                color: $white;
+
+                &:disabled {
+                    color: $light-grey;
+                    background-color: transparent;
+                    border: 1px solid $light-grey;
+                    cursor: default;
+                }
+            }
+        }
+
+    }
+}
+
+.id-field {
+    background: transparent;
+    padding: 0;
+    cursor: default;
+}
+
+.active-modal-height {
+    height: 100vh;
+}
+
+/**MovieCard component**/
+.movie-card {
+
+    &-container {
+        position: relative;
+        width: 320px;
+        margin: 0 20px 30px;
+        color: $white;
+    }
+
+    &-metadata {
+        display: flex;
+        justify-content: space-between;
+        padding: 15px 2px 7px;
+    }
+
+    &-poster-btn {
+        cursor: pointer;
+        background-color: $dark-grey;
+        border: none;
+    }
+
+    &-menu-icon {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 35px;
+        height: 35px;
+        background-color: $dark-grey;
+        border: none;
+        border-radius: 50%;
+        opacity: 0;
+
+        img {
+            width: 35px;
+            height: 35px;
+        }
+    }
+
+    &-container:hover &-menu-icon {
+        opacity: 1;
+    }
+}
+
+/**MovieDetails component**/
+.movie-details {
+
+    &-container {
+        display: flex;
+        padding: 25px 50px 50px 0;
+    }
+
+    &-main {
+        margin: 10px 0 0 50px;
+        color: $white;
+    }
+
+    &-header {
+        display: flex;
+        align-items: center;
+        margin-bottom: 15px;
+        font-size: 60px;
+        font-family: Arial, Helvetica, sans-serif;
+        
+        &-title {
+            margin-right: 25px;
+            letter-spacing: 1.5px;
+        }
+
+        &-rating {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 70px;
+            min-width: 70px;
+            color: $green;
+            font-size: 25px;
+            border: 1px solid $white;
+            border-radius: 50%;
+        }
+    }
+
+    &-release-and-runtime {
+        display: flex;
+        margin: 25px 0;
+        color: $pink;
+        font-size: 25px;
+
+        & div:nth-child(1) {
+            margin-right: 25px;
+        } 
+    }
+
+    &-overview {
+        margin-top: 20px;
+    }   
+}
+
+/**MovieDetailsConteiner component**/
+.details-page {
+    .blur-filter {
+        backdrop-filter: blur(10px);
+    }
+}
+
+/**MoviesList component**/
+.movies-list-container {
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+}
+
+/**ResultsFilter component**/
+.results-filter-list {
+    display: flex;
+    list-style-type: none;
+}
+
+/**ResultsSort component**/
+.results-sort-container {
+    display: flex;
+    align-items: center;
+    padding-bottom: 15px;
+
+    .sortby-label {
+        font-size: 18px;
+        color: $white;
+        opacity: 0.3;
+        white-space: nowrap;
+        cursor: default;
+    }
+}
+
+/**SearchMovie component**/
+.search-movie-container {
+    display: flex;
+
+    .search-movie-btn {
+        padding: 15px 65px;
+        font-size: 20px;
+        background-color: $pink;
+        color: $white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+}
+
+/**ContextMenu component**/
+.movie-context-menu {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    display: flex;
+    flex-direction: column;
+    width: 150px;
+    padding-top: 5px;
+    background-color: $dark-grey;
+    border-radius: 2px;
+
+    ul {
+        list-style-type: none;
+    }
+
+    &-item {
+        padding: 5px 15px;
+        cursor: pointer;
+    }
+
+    &-close-btn {
+        align-self: flex-end;
+        width: 24px;
+        height: 24px;
+        cursor: pointer;
+        border: none;
+	    background-color: transparent;
+    }
+}
+
+/**Footer component**/
+.footer-container {
+    display: flex;
+    justify-content: center;
+    background-color: $medium-grey;
+    padding: 15px 0;
+}
+
+/**Input component**/
+.search-input-field {
+    width: 100%;
+    padding: 10px 15px;
+    margin-right: 10px;
+    font-size: 20px;
+    color: $white;
+    border: none;
+    border-radius: 5px;
+    background-color: $medium-grey;
+}
+
+/**ListItem component**/
+.list-item {
+    color: $white;
+    padding: 0 0 14px;
+    margin-right: 20px;
+    font-size: 18px;
+    cursor: pointer;
+    
+    &:hover {
+        color: $pink;
+    }
+}
+
+.active {
+    border-bottom: 2px solid $pink;
+}
+
+/**Logo component**/
+.logo {
+    color: $pink;
+    font-size: 26px;
+    .netflix {
+        font-weight: 600;
+    }
+    .roulette {
+        font-weight: 400;
+    }
+}
+
+/**MovieForm component**/
+.form-input {
+
+    &-container {
+        display: flex;
+        flex-direction: column;
+    }
+
+    &-label {
+        margin: 30px 0 10px 0;
+        color: $pink;
+        font-size: 16px;
+    }
+
+    &-field {
+        min-height: 55px;
+        padding: 0 10px 0 15px;
+        color: $white;
+        font-size: 20px;
+        background-color: $medium-grey;
+        border: none;
+        border-radius: 5px;
+    }
+
+    &-error {
+        margin: 5px 0 0 5px;
+        color: $pink;
+        font-size: 12px;
+        font-family: cursive;
+    }
+}
+
+fieldset {
+    border: none !important;
+}
+
+input.MuiInputBase-input {
+    color: $white;
+    font-size: 20px;
+    font-weight: normal;
+    margin-left: -5px;
+}
+
+/**MovieGenres component**/
+.movie-genres {
+    padding: 0 2px;
+    font-size: 15px;
+    letter-spacing: 0.7px;
+}
+
+/**MoviePoster component**/
+.movie-card-poster {
+    width: 320px;
+    max-height: 450px;
+    object-fit: cover;
+}
+
+/**MovieRelease component**/
+.movie-release-date {
+    font-size: 16px;
+    border: 1px solid $light-grey;
+    border-radius: 2px;
+    padding: 1px 15px;
+}
+
+/**MovieTitle component**/
+.movie-title {
+    font-size: 18px;
+}
+
+/**NoMovieFound component**/
+.no-movies-found {
+    &-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex: 1 0 auto;
+        background-color: $dark-grey;
+    }
+    
+    &-title {
+        color: $white;
+        font-weight: normal;
+        font-size: 40px;
+    }
+}
+
+/**ResultsCount component**/
+.results-count-container {
+    padding: 25px 0;
+    color: $white;
+    font-size: 20px;
+    letter-spacing: 0.6px;
+    line-height: 25px;
+
+    & span:nth-child(1)  {
+        font-weight: bold;
+    }
+}
+
+/**ResultsMenu component**/
+.results-menu-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid $medium-grey;
+    padding-top: 15px;
+    height: 50px;
+}
+
+/**Select component**/
+.select-sort {
+    display: grid;
+    grid-template-areas: "select";
+    align-items: center;
+    width: 100%;
+    max-width: 200px;
+    min-width: 170px;
+    padding: 5px 7px;
+    margin-left: 20px;
+
+    select {
+        appearance: none;
+        background: transparent;
+        color: $white;
+        border: none;
+        font-size: 18px;
+        width: 100%;
+        outline: none;
+        cursor: pointer;
+        padding-right: 20px;
+        grid-area: select;
+    }
+    
+    option {
+        color: $dark-grey;
+        cursor: pointer;
+    }
+    
+    &::after {
+        content: "";
+        width: 10px;
+        height: 6px;
+        background-color: $pink;
+        clip-path: polygon(100% 0%, 0 0%, 50% 100%);
+        grid-area: select;
+        justify-self: end;
+    }
+}
+
+/**404 page**/
+.not-found-page {
+    &-container {
+        height: 100vh;
+        background-color: $dark-grey;
+    }
+
+    &-header {
+        padding: 20px 60px 0;
+    }
+
+    &-main {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 60px;
+    }
+
+    &-title {
+        color: $white;
+        font-weight: normal;
+        font-size: 40px;
+        letter-spacing: 2px;
+    }
+
+    &-logo {
+        margin: 40px 0;
+    }
+
+    &-btn {
+        padding: 15px 20px;
+        font-size: 20px;
+        background: transparent;
+        color: $pink;
+        border: 1px solid $pink;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    &-footer {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+    }
+}
